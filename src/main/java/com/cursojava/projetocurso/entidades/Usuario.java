@@ -1,26 +1,34 @@
 package com.cursojava.projetocurso.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_usuario")
 public class Usuario implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String email;
 	private String fone;
 	private String senha;
-	
+
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+
 	public Usuario() {
 	}
 
@@ -72,6 +80,10 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -88,8 +100,5 @@ public class Usuario implements Serializable {
 		Usuario other = (Usuario) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
 
 }

@@ -14,7 +14,7 @@ import com.cursojava.projetocurso.repositorios.UsuarioRepositorio;
 @Profile("test")
 public class TesteConfig implements CommandLineRunner {
 
-	@Autowired
+	@Autowired //tras as dependencias do objeto instanciado
 	private UsuarioRepositorio usuarioRepositorio;
 
 	@Override

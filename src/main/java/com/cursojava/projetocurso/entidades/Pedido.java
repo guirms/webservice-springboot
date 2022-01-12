@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "tb_pedido")
 public class Pedido implements Serializable{
@@ -21,6 +23,8 @@ public class Pedido implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant momento;
 	
 	@ManyToOne
@@ -44,12 +48,12 @@ public class Pedido implements Serializable{
 		this.id = id;
 	}
 
-	public Instant getInstante() {
+	public Instant getMomento() {
 		return momento;
 	}
 
-	public void setInstante(Instant instante) {
-		this.momento = instante;
+	public void setMomento(Instant momento) {
+		this.momento = momento;
 	}
 
 	public Usuario getCliente() {

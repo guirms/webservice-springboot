@@ -29,7 +29,6 @@ public class Produto implements Serializable {
 	private String imgUrl;
 
 	@ManyToMany
-
 	@JoinTable(name = "tb_categoria_produto", 
 	joinColumns = @JoinColumn(name = "id_produto"), 
 	inverseJoinColumns = @JoinColumn(name = "id_categoria"))

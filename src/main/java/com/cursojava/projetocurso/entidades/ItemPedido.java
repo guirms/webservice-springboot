@@ -70,6 +70,10 @@ public class ItemPedido implements Serializable {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+	
+	public Double getSubTotal() { //pq na plataforma java enterprise, o que vale é o get
+		return preco * quantidade;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

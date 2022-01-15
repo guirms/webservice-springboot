@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.cursojava.projetocurso.entidades.Categoria;
 import com.cursojava.projetocurso.entidades.ItemPedido;
+import com.cursojava.projetocurso.entidades.Pagamento;
 import com.cursojava.projetocurso.entidades.Pedido;
 import com.cursojava.projetocurso.entidades.Produto;
 import com.cursojava.projetocurso.entidades.Usuario;
@@ -35,7 +36,7 @@ public class TesteConfig implements CommandLineRunner {
 
 	@Autowired
 	private ProdutoRepositorio produtoRepositorio;
-	
+
 	@Autowired
 	private ItemPedidoRepositorio itemPedidoRepositorio;
 
@@ -73,16 +74,17 @@ public class TesteConfig implements CommandLineRunner {
 
 		usuarioRepositorio.saveAll(Arrays.asList(u1, u2));
 		pedidoRepositorio.saveAll(Arrays.asList(p1, p2, p3));
-		
+
 		ItemPedido ip1 = new ItemPedido(p1, pr1, 2, pr1.getPreco());
 		ItemPedido ip2 = new ItemPedido(p1, pr3, 1, pr3.getPreco());
 		ItemPedido ip3 = new ItemPedido(p2, pr3, 2, pr3.getPreco());
-		ItemPedido ip4 = new ItemPedido(p3, pr5, 2, pr5.getPreco()); 
-		
-		itemPedidoRepositorio.saveAll(Arrays.asList(ip1, ip2, ip3, ip4));
-		
-		
+		ItemPedido ip4 = new ItemPedido(p3, pr5, 2, pr5.getPreco());
 
+		itemPedidoRepositorio.saveAll(Arrays.asList(ip1, ip2, ip3, ip4));
+
+		Pagamento pag1 = new Pagamento(null, Instant.parse("2019-06-20T21:53:07Z"), p1);
+		p1.setPagamento(pag1);
+		pedidoRepositorio.saveAll(Arrays.asList(p1)); //pois o pagamento é exclusivo do pedido, e não independente
 	}
 
 }

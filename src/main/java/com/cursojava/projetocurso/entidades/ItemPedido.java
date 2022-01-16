@@ -71,7 +71,7 @@ public class ItemPedido implements Serializable {
 		return Objects.hash(id);
 	}
 	
-	public Double getSubTotal() { //pq na plataforma java enterprise, o que vale é o get
+	public Double getSubTotalPedido() { //pq na plataforma java enterprise, o que vale é o get
 		return preco * quantidade;
 	}
 

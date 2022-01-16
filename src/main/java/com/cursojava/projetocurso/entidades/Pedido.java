@@ -96,7 +96,7 @@ public class Pedido implements Serializable {
 	public Double getTotalPedido() {
 		double total = 0.0;
 		for (ItemPedido x : itens) {
-			total += x.getSubTotal();
+			total += x.getSubTotalPedido();
 		}
 		return total;
 	}

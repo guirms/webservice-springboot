@@ -3,6 +3,8 @@ package com.cursojava.projetocurso.servicos;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -15,37 +17,41 @@ import com.cursojava.projetocurso.servicos.exceptions.RecursoNaoEncontradoExcept
 
 @Service
 public class UsuarioServico {
-	
+
 	@Autowired
 	private UsuarioRepositorio repositorio;
-	
-	public List<Usuario> encontrarTudo(){
+
+	public List<Usuario> encontrarTudo() {
 		return repositorio.findAll();
 	}
-	
+
 	public Usuario encontrarPorId(Long id) {
 		Optional<Usuario> obj = repositorio.findById(id);
-		return obj.orElseThrow(() -> new RecursoNaoEncontradoException(id));
+		return obj.orElseThrow(() -> new RecursoNaoEncontradoException(id)); //aqui era get
 	}
-	
+
 	public Usuario inserir(Usuario obj) {
 		return repositorio.save(obj);
 	}
-	
+
 	public void deletar(Long id) {
 		try {
-		repositorio.deleteById(id);
-		} catch(EmptyResultDataAccessException e) {
-			throw new RecursoNaoEncontradoException(id); 
-		} catch(DataIntegrityViolationException e) {
-			throw new BancoDeDadosException(e.getMessage()); 
+			repositorio.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new RecursoNaoEncontradoException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new BancoDeDadosException(e.getMessage());
 		}
 	}
-	
+
 	public Usuario atualizar(Long id, Usuario obj) {
-		Usuario entidade = repositorio.getById(id); 
-		atualizarDados(entidade, obj);
-		return repositorio.save(entidade);
+		try {
+			Usuario entidade = repositorio.getById(id);
+			atualizarDados(entidade, obj);
+			return repositorio.save(entidade);
+		} catch (EntityNotFoundException e) {
+			throw new RecursoNaoEncontradoException(id);
+		}
 	}
 
 	private void atualizarDados(Usuario entidade, Usuario obj) {

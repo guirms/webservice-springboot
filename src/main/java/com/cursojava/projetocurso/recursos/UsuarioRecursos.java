@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +41,7 @@ public class UsuarioRecursos {
 	public ResponseEntity<Usuario> inserir(@RequestBody Usuario obj){
 		obj = servico.inserir(obj); // para inserir de forma correta com o código 201 created
 		URI uri	= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+		return ResponseEntity.created(uri).body(obj); //para criar o corpo com o codigo 201 created
 	}
 	
 	@DeleteMapping(value = "/{id}")
@@ -49,4 +50,10 @@ public class UsuarioRecursos {
 		return ResponseEntity.noContent().build(); //para retornar sem corpo
 	}
 	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody Usuario obj){
+		obj = servico.atualizar(id, obj);
+		return ResponseEntity.ok().body(obj);
+		
+	}
 }
